@@ -1,0 +1,51 @@
+﻿@model List<KeyValuePair<ProductModel, int>>
+@{
+    ViewData["Title"] = "AllProduct";
+}
+<section class="mb-lg-10 mt-lg-14 my-8">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header-container p-0 mb-3" style="background-color:lightskyblue;">
+                    <div class="p-3 mb-3" style="background-color:steelblue;">
+                        <div class="container">
+                            <h2>Мої покупки</h2>
+                        </div>
+                    </div>
+                    <div class="row justify-content mx-3">
+            @if (Model != null)
+            {
+                if (Model.Count() != 0)
+                {
+                    @foreach (KeyValuePair<ProductModel, int> product in Model)
+                    {
+                        <div class="col-md-3 mb-3">
+                            <a href="/AllProduct/DetailsProduct?id=@product.Key.id" class="text-decoration-none text-inherit">
+                                <div class="card" style="@(product.Key.available ? "" : "opacity: 0.7; background-color: #f2f2f2;")">
+                                    <img src="@Url.Content(product.Key.img)" class="card-img-top" style="object-fit: contain; width: 100%; height: 200px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@product.Key.name</h5>
+                                        <p class="card-text">@product.Key.short_description</p>
+                                        <p class="card-text">Price: $@product.Key.price</p>
+                                        <p class="card-text">Кількість купленого: @product.Value</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <h1>Поки що немає покупок!</h1>
+                }
+            }
+            else
+            {
+                <h1>Увійдіть у свій акаунт!</h1>
+            }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

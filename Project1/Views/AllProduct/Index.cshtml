@@ -1,0 +1,36 @@
+﻿@model List<ProductModel>
+@{
+    ViewData["Title"] = "AllProduct";
+}
+<section class="mb-lg-10 mt-lg-14 my-8">
+    <div class="container">
+    <div class="row">
+         @if (Model != null && Model.Count() != 0)
+         {
+            @foreach (ProductModel product in Model)
+            {
+                <div class="col-md-3 mb-3">
+                    <a href="/AllProduct/DetailsProduct?id=@product.id" class="text-decoration-none text-inherit">
+                        <div class="card" style="@(product.available ? "" : "opacity: 0.7; background-color: #f2f2f2;")">
+                            <img src="@Url.Content(product.img)" class="card-img-top" style="object-fit: contain; width: 100%; height: 200px;">
+                            <div class="card-body">
+                                <h5 class="card-title">@product.name</h5>
+                                <p class="card-text">@product.short_description</p>
+                                <p class="card-text">Price: @product.price грн</p>
+                                @if (!product.available)
+                                {
+                                    <p class="card-text text-center" style="font-weight: bold; font-size: 18px; color: black;">немає в наявності</p>
+                                }
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                }
+            }
+            else
+            {
+                <h1>Нічого не знайдено за цією категорією!</h1>
+            }
+        </div>
+</div>
+</section>

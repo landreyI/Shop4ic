@@ -1,0 +1,54 @@
+﻿@model CategoryModel
+@{
+    ViewData["Title"] = "AddCategory";
+}
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+@using (Html.BeginForm("AddCategory", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        @Html.ValidationMessageFor(m => m.category,"", new { @class = "text-danger" })
+
+    </div>
+    <div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header-container p-0 mb-3" style="background-color:lightskyblue;">
+                    <div class="p-3 mb-3" style="background-color:steelblue;">
+                        <div class="container">
+                            <h2>Додати категорію</h2>
+                        </div>
+                    </div>
+                    <div class="header-container p-3 mb-3">
+        <form class="needs-validation" asp-action="AddProduct" method="post" novalidate>
+            <div class="row g-3">
+                <div class="col">
+                    <label for="formSignupName" class="form-label visually-hidden">Тип</label>
+                    <input type="text" class="form-control" id="formSignupName" placeholder="Тип" required asp-for="category">
+                </div>
+                <div class="col-12">
+                    <label for="formSignupLongDescription" class="form-label visually-hidden">Опис</label>
+                    <textarea class="form-control" id="formSignupLongDescription" placeholder="Опис" required asp-for="description"></textarea>
+                </div>
+                <div class="col">
+                    <label for="formSignupImg" class="form-label visually-hidden">Фото</label>
+                    <input type="file" class="form-control" id="formSignupImg" name="formSignupImg" accept="image/*" required>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Зберегти</button>
+                </div>
+            </div>
+        </form>
+    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $('#formSignupImg').on('change', function () {
+        var fileName = $(this).val().split('\\').pop();
+        var imgPath = '~/img/categoryImg/' + fileName;
+        $('#formSignupImg').val(imgPath);
+    });
+</script>

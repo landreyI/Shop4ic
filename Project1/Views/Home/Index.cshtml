@@ -1,0 +1,192 @@
+﻿@model List<CategoryModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<section class="mb-lg-10 mt-lg-14 my-8">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header-container p-0 mb-3" style="background-color: lightskyblue;">
+                    <div class="p-3 mb-3" style="background-color:steelblue;">
+            <center>
+                <div class="col-12 mb-6" style="font-family: 'monospace', sans-serif;">
+                    <h2 class="mb-1">Категорії товарів</h2>
+                </div>
+            </center>
+        </div>
+                <div class="header-container p-3 mb-3">
+            <div class="row">
+            <div class="row justify-content-center">
+                <div class="col-md-2">
+                    <a href="/AllProduct/Index?category=0" class="text-decoration-none text-inherit">
+                        <div class="card mb-4" style="max-width: 200px; max-height: 300px;">
+                            <img src="~/img/exelent.jpg" alt="Grocery Ecommerce Template" class="card-img-top">
+                            <div class="card-body">
+                                <div class="text-truncate">Найпопулярніші</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @if (Model != null && Model.Count != 0)
+                {
+                    @foreach (var category in Model)
+                    {
+
+                        @if (category.category == "Default" && (!User.Identity.IsAuthenticated || User.IsInRole("Користувач"))) { }
+                            else
+                            {
+                            <div class="col-md-2">
+                                @if ((User.IsInRole("Адмін") || User.IsInRole("Головний Адмін")) && category.category != "Default")
+                                {
+                                    <button type="button" class="btn btn-primary btn-EditModal" data-bs-toggle="modal" data-bs-target="#EditModal"
+                                            data-idcategory="@category.IdCategory" data-name="@category.category" data-description="@category.description" data-img="@category.img">
+                                        <i class="feather-icon icon-heart">✏️</i>
+                                    </button>
+                                    <a href="/Admin/DelCategory?idCategory=@category.IdCategory" class="btn btn-danger me-2" style="z-index: 1;">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                }
+
+                                <a href="/AllProduct/Index?category=@category.IdCategory" class="text-decoration-none text-inherit">
+                                    <div class="card mb-4" style="max-width: 200px; max-height: 300px;">
+                                        <img src="@Url.Content(category.img)" alt="Grocery Ecommerce Template" class="card-img-top">
+                                        <div class="card-body">
+                                            <div class="text-truncate">@category.category</div>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+                            }
+                        
+                    }
+
+                }
+                else
+                {
+                    <h1>Немає категорій!</h1>
+                }
+            </div>
+        </div>
+    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Редагування товару</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="productForm" action="/Admin/EditCategory" method="post" enctype="multipart/form-data">
+                        <div class="row g-3">
+                            <input type="hidden" class="form-control" id="formIdCategory" placeholder="formIdCategory">
+                            <div class="col">
+                                <label for="formCategory" class="form-label">Назва</label>
+                                <input type="text" class="form-control" id="formCategory" placeholder="Назва">
+                            </div>
+                            <div class="col">
+                                <label for="formDescription" class="form-label">Опис</label>
+                                <textarea class="form-control" id="formDescription" placeholder="Опис"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label for="formSignupImg" class="form-label">Фото</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="formSignupImg" placeholder="Фото" readonly>
+                                    <input type="file" class="form-control" id="formSignupImgFile" name="formSignupImgFile" accept="image/*">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Зберегти</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts {
+    <script>
+        $('#formSignupImgFile').on('change', function () {
+            var fileName = $(this).val().split('\\').pop();
+            var imgPath = '~/img/categoryImg/' + fileName;
+            $('#formSignupImgFile').val(imgPath);
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.btn-EditModal').on('click', function () {
+                var IdCategory = $(this).data('idcategory');
+                var categoryName = $(this).data('name');
+                var categoryDescription = $(this).data('description');
+                var categoryImg = $(this).data('img');
+
+                // Використання отриманих даних для заповнення форми модального вікна
+                $('#formIdCategory').val(IdCategory);
+                $('#formCategory').val(categoryName);
+                $('#formDescription').val(categoryDescription);
+                $('#formSignupImg').val(categoryImg);
+
+                $('#EditModal').modal('show');
+            });
+
+            $('#productForm').submit(function (e) {
+                e.preventDefault();
+
+                var formData = new FormData();
+
+                formData.append('IdCategory', $('#formIdCategory').val());
+                formData.append('category', $('#formCategory').val());
+                formData.append('description', $('#formDescription').val());
+                formData.append('img', $('#formSignupImg').val());
+                formData.append('formSignupImgFile', $('#formSignupImgFile')[0].files[0]);
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.success) {
+                            $('#EditModal').modal('hide');
+                            setTimeout(function () {
+                                location.reload();
+                            }, 2000);
+                            showMessage('Успішно оновлено!');
+                        } else {
+                            showMessage('Помилка при оновленні товару.', false);
+                        }
+                    },
+                    error: function () {
+                        showMessage('Помилка при відправленні запиту.', false);
+                    }
+                });
+            });
+            function showMessage(message, isSuccess = true) {
+                var alertClass = isSuccess ? 'alert-success' : 'alert-danger';
+                var alert = $('<div class="alert ' + alertClass + ' position-fixed top-0 end-0 p-3" style="z-index: 1050;">')
+                    .text(message)
+                    .appendTo('body');
+
+                setTimeout(function () {
+                    alert.fadeOut('slow', function () {
+                        alert.remove();
+                    });
+                }, 3000);
+            }
+        });
+    </script>
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />

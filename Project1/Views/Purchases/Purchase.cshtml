@@ -1,0 +1,66 @@
+﻿@model BuyPurchaseViewModel
+@{
+}
+@if(Model.User == null)
+{
+    <h1>Увійдіть у свій акаунт!</h1>
+}
+else if(Model.Quantity < 1)
+{
+    <h1>Не можливо купити @Model.Quantity товару</h1>
+}
+else if(Model.Product == null)
+{
+    <h1>Помилка, такого товару не існує!</h1>
+}
+else
+{
+    <body>
+        <div class="container mt-5">
+            <h2>Відомість про покупку</h2>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <p><strong>Ім'я покупця:</strong> @Model.User.name</p>
+                    <p><strong>Email покупця:</strong> @Model.User.email</p>
+                </div>
+            </div>
+
+            <h3>Товари:</h3>
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>Фото</th>
+                        <th>Назва</th>
+                        <th>Кількість</th>
+                        <th>Ціна</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><img src="@Url.Content(Model.Product.img)" alt="Фото товару" class="img-thumbnail" style="max-width: 100px;"></td>
+                        <td>@Model.Product.name</td>
+                        <td>@Model.Quantity</td>
+                        @if (Model.Product.discount != 0)
+                        {
+                            double originalPrice = Model.Product.price;
+                            double discountPercentage = Model.Product.discount;
+                            double discountedPrice = originalPrice - (originalPrice * (discountPercentage / 100));
+                            <td>@(discountedPrice * Model.Quantity) грн</td>
+                        }
+                        else
+                        {
+                            <td>@(Model.Product.price * Model.Quantity) грн</td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-4">
+                <a href="/Purchases/Buy?idProduct=@Model.Product.id&quantity=@Model.Quantity" class="btn btn-primary">Продовжити покупки</a>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+}

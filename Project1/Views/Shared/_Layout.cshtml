@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Magazin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Project1.styles.css" asp-append-version="true" />
+</head>
+</html>
+<header class="header-custom">
+    <nav class="border-bottom border-2">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-6 col-8">
+                    <a class="navbar-brand d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart me-2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.25 13.5a2 2 0 0 0 2 1.5h9.5a2 2 0 0 0 2-1.5L23 6H6"></path>
+                        </svg>
+                        <h2 class="text-dark mb-0">Shop4ic</h2>
+                    </a>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <form action="/AllProduct/SearchProduct" method="GET">
+                        <div class="input-group">
+                            <input id="searchInput" class="form-control rounded" type="search" name="text" placeholder="Знайти товар">
+                            <span class="input-group-append">
+                                <button class="btn bg-white border border-start-0 ms-1 rounded" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-3 col-md-6 col-4 text-end">
+                    <div class="d-flex justify-content-end">
+                        <a href="/Accaunt/Authorization" class="text-decoration-none text-inherit me-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user text-dark">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </a>
+                        <a href="/Basket/GetBasket" class="text-decoration-none text-inherit me-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart text-dark">
+                                <path d="M1 1L4 16H20L23 1H1ZM18 18H6L8 8H18V18ZM9 18C10.1046 18 11 18.8954 11 20C11 21.1046 10.1046 22 9 22C7.89543 22 7 21.1046 7 20C7 18.8954 7.89543 18 9 18ZM15 18C16.1046 18 17 18.8954 17 20C17 21.1046 16.1046 22 15 22C13.8954 22 13 21.1046 13 20C13 18.8954 13.8954 18 15 18Z" />
+                            </svg>
+                        </a>
+                        <a href="/Purchases/_LayoutAction" class="text-decoration-none text-inherit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag text-dark">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3"></div>
+        </nav>
+            
+    <div class="mt-3">
+        <nav class="navbar navbar-expand-lg navbar-light navbar-default py-0 pb-lg-0" aria-label="Offcanvas navbar large">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="navbar-default" aria-labelledby="navbar-defaultLabel">
+                    <div class="offcanvas-header pb-1">
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="dropdown mb-3">
+                            <button class="btn px-6" style="background-color:lightblue;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="me-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid">
+                                        <rect x="3" y="3" width="7" height="7"></rect>
+                                        <rect x="14" y="3" width="7" height="7"></rect>
+                                        <rect x="14" y="14" width="7" height="7"></rect>
+                                        <rect x="3" y="14" width="7" height="7"></rect>
+                                    </svg>
+                                </span>
+                                GitHub
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="https://github.com/landreyI/Shop4ic.git" target="_blank">Цей сайт</a></li>
+                                <li><a class="dropdown-item" href="https://github.com/landreyI/project-management.git" target="_blank">Управління проектами</a></li>
+                                <li><a class="dropdown-item" href="https://github.com/landreyI/notes.git" target="_blank">Нотатки</a></li>
+                                <li><a class="dropdown-item" href="https://github.com/landreyI/music-player.git" target="_blank">Музичний плеєр</a></li>
+                            </ul>
+                        </div>
+                        <ul class="navbar-nav align-items-center">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Index" role="button" style="color: black;">Головна</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" style="color: black;" data-bs-toggle="dropdown" aria-expanded="false">Магазин</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/AllProduct/Index">Всі товари</a></li>
+                                    <li><a class="dropdown-item" href="/AllProduct/Views">Частіше переглядають</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#filterModal">Фільтр</a></li>
+                                     @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <li><a class="dropdown-item" href="/Purchases/GetAllPurchases">Мої покупки</a></li>
+                                    }
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: black;" href="/Home/Info">Інформація про сайт</a>
+                            </li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" style="color: black;" data-bs-toggle="dropdown" aria-expanded="false">Користувач</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/Accaunt/Authorization">Кабінет</a></li>
+                                        <li><a class="dropdown-item" href="/AllProduct/GetViewsUser">Мої перегляди</a></li>
+                                        <li><a class="dropdown-item" href="/User/GetCommentUser">Мої відгуки</a></li>
+                                    </ul>
+                                </li>
+                                if (User.IsInRole("Адмін") || User.IsInRole("Головний Адмін"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" style="color: black;" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="/AllProduct/Index">Редагувати товари</a></li>
+                                            <li><a class="dropdown-item" href="/Admin/EditUser">Подивитися користувачів</a></li>
+                                            <li><a class="dropdown-item" href="/Admin/AddProduct">Додати товар</a></li>
+                                            <li><a class="dropdown-item" href="/Admin/AddCategory">Додати категорію</a></li>
+                                        </ul>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="mt-5"></div>
+	</header>
+<div class="mt-4"></div>
+<body>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+	<footer class="color-footer">
+        <div class="container">
+			&copy; 2024 - Shop4ic - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+<div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filterModalLabel">Фільтр</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="formSignupCategory" class="form-label">Категорія</label>
+                    <select class="form-select" id="formSignupCategory" required>
+                        @foreach (CategoryModel category in ListCategory.GetListCategores())
+                        {
+                            if (category.category != "Default")
+                            {
+                                <option value="@category.IdCategory">@category.category</option>
+                            }
+                            
+                        }
+                    </select>
+                    <div class="invalid-feedback">Будь ласка оберіть категорію.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="priceRange" class="form-label">Діапазон цін</label>
+                    <input type="range" class="form-range" id="priceRange" min="0" max="100000" value="0" oninput="updatePriceValue(this.value)">
+                    <span id="priceValue">0</span>
+                </div>
+                <div class="mb-3">
+                    <label for="priceInput" class="form-label">Введіть ціну</label>
+                    <input type="number" class="form-control" id="priceInput" min="0" max="100000" oninput="updatePriceValue(this.value)">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="availableOnly">
+                    <label class="form-check-label" for="availableOnly">Тільки наявні товари</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                <button type="button" class="btn btn-primary" id="filterBtn" data-url="@Url.Action("FindFilterProduct", "AllProduct")">Фільтрувати</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updatePriceValue(value) {
+        const minValue = 0;
+        const maxValue = 100000;
+        value = Math.min(Math.max(value, minValue), maxValue);
+
+        document.getElementById('priceValue').innerText = value;
+
+        document.getElementById('priceRange').value = value;
+
+        document.getElementById('priceInput').value = value;
+    }
+</script>
+<script>
+    document.getElementById('filterBtn').addEventListener('click', function () {
+
+        var category = document.getElementById('formSignupCategory').value;
+        var priceRange = document.getElementById('priceRange').value;
+        var availableOnly = document.getElementById('availableOnly').checked;
+
+        $.ajax({
+            type: "POST",
+            url: "/AllProduct/FindFilterProduct",
+            data: {
+                idCategory: category,
+                priceRange: priceRange,
+                availableOnly: availableOnly
+            },
+            success: function (result) {
+                document.open();
+                document.write(result);
+                document.close();
+                $('#filterModal').modal('hide');
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    });
+</script>

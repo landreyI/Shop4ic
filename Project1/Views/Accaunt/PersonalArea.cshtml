@@ -1,0 +1,29 @@
+﻿@model UserModel
+@{
+    ViewData["Title"] = "Personal Area";
+}
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .text-center {
+            text-align: center;
+        }
+
+        .custom-font {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center">
+            <h1>Доброго дня, користувачу!</h1>
+            <p>
+                Вітаємо @Model.name<br>
+                Ви зараєстровані як @Model.role.
+            </p>
+            <a href="/Accaunt/Clouse" class="btn btn-primary">Вихід</a>
+        </div>
+    </div>
+</body>
